@@ -6,12 +6,58 @@ using System.IO;
 namespace AdventOfCode21.Tests
 {
     public class SonarSweeperTests
-    {  
+    {
         [Test]
-        public void calculates_number_of_times_depth_increases()
+        [TestCase(new int[] { 3, 4 }, ExpectedResult = 1)]
+        [TestCase(new int[] { 10, 500 }, ExpectedResult = 1)]
+        [TestCase(new int[] { 1, 5, 40 }, ExpectedResult = 2)]
+
+        public int CountPositiveStepChanges_increments_a_counter_for_positive_step_changes(int[] readings)
         {
-            var data = File.ReadAllLines("C:/Users/James.h.taylor/dev/advent-of-code/AdventOfCode21/AdventOfCode21.Tests/Data/day1.txt");             
-            Assert.AreEqual equal);
+            int count = SonarSweeper.CountPositiveStepChanges(readings);
+            return count;
+        }
+
+        [Test]
+        [TestCase(new int[] { 4, 3 }, ExpectedResult = 0)]
+        [TestCase(new int[] { 1000, 500 }, ExpectedResult = 0)]
+        [TestCase(new int[] { 5, 5 }, ExpectedResult = 0)]
+
+        public int CountPositiveStepChanges_calculates_zero_when_no_positive_step_changes(int[] readings)
+        {
+            int count = SonarSweeper.CountPositiveStepChanges(readings);
+            return count;
+        }
+
+        [Test]
+        public void CountPositiveStepChanges_calculates_positive_step_changes_with_mixed_data()
+        {
+            var readings = SonarFileHelper.ReadFileRows().Select(str => int.Parse(str)).ToArray();
+            int count = SonarSweeper.CountPositiveStepChanges(readings);
+            Assert.AreEqual(1292, count);
+        }
+
+        [Test]
+        [TestCase(new int[] { 1, 2, 3, 4 }, ExpectedResult = 1)]
+        [TestCase(new int[] { 1, 2, 3, 4, 5, 6 }, ExpectedResult = 3)]
+        public int CountSlidingWindowPositiveStepChanges_returns_one_for_a_positive_sliding_window_step_change(int[] readings)
+        {           
+            return SonarSweeper.CountSlidingWindowPositiveStepChanges(readings);            
+        }
+
+        [Test]
+        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7 }, ExpectedResult = 4)]
+        public int CountSlidingWindowPositiveStepChanges_ignores_incomplete_windows(int[] readings)
+        {
+            return SonarSweeper.CountSlidingWindowPositiveStepChanges(readings);
+        }
+
+        [Test]
+        public void ountSlidingWindowPositiveStepChanges_calculates_positive_step_changes_with_mixed_data()
+        {
+            var readings = SonarFileHelper.ReadFileRows().Select(str => int.Parse(str)).ToArray();
+            int count = SonarSweeper.CountSlidingWindowPositiveStepChanges(readings);
+            Assert.AreEqual(1262, count);
         }
     }
 }
