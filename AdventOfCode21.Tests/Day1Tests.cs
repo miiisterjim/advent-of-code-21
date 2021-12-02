@@ -5,8 +5,17 @@ using System.IO;
 
 namespace AdventOfCode21.Tests
 {
-    public class SonarSweeperTests
+    public class Day1Tests
     {
+        private int[] readings;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var path = Environment.CurrentDirectory + "/Data/day1.txt";
+            readings = FileHelper.ReadFileRows(path).Select(str => int.Parse(str)).ToArray();
+        }
+
         [Test]
         [TestCase(new int[] { 3, 4 }, ExpectedResult = 1)]
         [TestCase(new int[] { 10, 500 }, ExpectedResult = 1)]
@@ -32,7 +41,6 @@ namespace AdventOfCode21.Tests
         [Test]
         public void CountPositiveStepChanges_calculates_positive_step_changes_with_mixed_data()
         {
-            var readings = SonarFileHelper.ReadFileRows().Select(str => int.Parse(str)).ToArray();
             int count = SonarSweeper.CountPositiveStepChanges(readings);
             Assert.AreEqual(1292, count);
         }
@@ -55,7 +63,6 @@ namespace AdventOfCode21.Tests
         [Test]
         public void ountSlidingWindowPositiveStepChanges_calculates_positive_step_changes_with_mixed_data()
         {
-            var readings = SonarFileHelper.ReadFileRows().Select(str => int.Parse(str)).ToArray();
             int count = SonarSweeper.CountSlidingWindowPositiveStepChanges(readings);
             Assert.AreEqual(1262, count);
         }
